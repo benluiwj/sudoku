@@ -3,16 +3,30 @@ import { getSudoku } from "sudoku-gen";
 export const SudokuGame = () => {
   const sudoku = getSudoku();
 
+  const arrayOfArrays: string[][] = sudoku.puzzle
+    .split("")
+    .reduce<string[][]>((acc, char, index) => {
+      if (index % 9 === 0) {
+        acc.push([]);
+      }
+      acc[acc.length - 1].push(char);
+      return acc;
+    }, []);
+
   return (
     <div className="container m-auto mt-16 w-1/2">
-      <div className="grid grid-cols-9">
-        {sudoku.puzzle.split("").map((val, i) => (
-          <div
-            className="flex justify-center items-center border"
-            key={i}
-            style={{ aspectRatio: "1/1" }}
-          >
-            {val}
+      <div className="grid grid-cols-3">
+        {arrayOfArrays.map((val, i) => (
+          <div className="grid grid-cols-3 border border-white">
+            {val.map((cellVal, j) => (
+              <div
+                className="flex justify-center items-center  border border-slate-500  "
+                key={j}
+                style={{ aspectRatio: "1/1" }}
+              >
+                {cellVal == "-" ? "" : cellVal}
+              </div>
+            ))}
           </div>
         ))}
       </div>
