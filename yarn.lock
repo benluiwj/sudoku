@@ -7,24 +7,6 @@
   resolved "https://registry.yarnpkg.com/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz#bd9154aec9983f77b3a034ecaa015c2e4201f6cf"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@algorithm.ts/dlx@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@algorithm.ts/dlx/-/dlx-3.1.1.tgz#2ce70e186684d0bbdc2670f048476ffee3cca63f"
-  integrity sha512-9eDvm7w0STkQ8naAqIopyl9hBphhn6Rz3aT1kZYJAyCEtP5omfutchuS4FbMXXJyt8XAuRj6XNtgo5rims4JEw==
-
-"@algorithm.ts/shuffle@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@algorithm.ts/shuffle/-/shuffle-3.1.1.tgz#14a8c841dbdd4fa56bf361d35737573aa684de83"
-  integrity sha512-8yNqrYjQS947JyMWE0nlxkypKoIDEAVB8z8Z682I6/7A5ujTc0TTD3J4Z5iDOCOsaByZdn/lxbWXK95cyxUqgg==
-
-"@algorithm.ts/sudoku@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@algorithm.ts/sudoku/-/sudoku-3.1.1.tgz#05321ed657d0adbf2fff9d887a6d698210bec90c"
-  integrity sha512-InMuEEVEV1wQ1mGo0NQ0c/qR8rEMFkKmHZwU8vCA7a9liLmDgC2POxxs3ItSL9HEqAQXXT/9Wl96tOES383QzA==
-  dependencies:
-    "@algorithm.ts/dlx" "^3.1.1"
-    "@algorithm.ts/shuffle" "^3.1.1"
-
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
@@ -2375,6 +2357,11 @@ sucrase@^3.32.0:
     mz "^2.7.0"
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
+
+sudoku-gen@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/sudoku-gen/-/sudoku-gen-1.0.2.tgz#17c5f3637047751121aec31647fcfcf9b7c223d4"
+  integrity sha512-zQFQNbar9qGpbteAH7CQShGoR5lk7r4KYlt0Wsvts1eVMzLb2EZUovzc7gAmoHp+HmXGYadmqCyyXoY7QVEyhA==
 
 supports-color@^7.1.0:
   version "7.2.0"
