@@ -1,3 +1,4 @@
+import { isSelectedCellEqualCurrentCell } from "@/app/utils";
 import { SUDOKU_VALUE, outOfBoundsCell } from "@/app/utils/constants";
 import { useSudokuContext } from "@/context/sudokuContext";
 import { MouseEventHandler, useEffect, useState } from "react";
@@ -20,10 +21,10 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
     handleSelectedNumberChange,
   } = useSudokuContext();
   const [cellValue, setCellValue] = useState(value);
-  const positionArray = [rowPosition, colPosition];
+  const currentCell = [rowPosition, colPosition];
 
   useEffect(() => {
-    if (selectedCell[0] == rowPosition && selectedCell[1] == colPosition) {
+    if (isSelectedCellEqualCurrentCell(selectedCell, currentCell)) {
       setCellValue(selectedNumber);
       handleSelectedCellChange(outOfBoundsCell);
       handleSelectedNumberChange(SUDOKU_VALUE.NONE);
@@ -31,15 +32,14 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
   }, [selectedNumber]);
 
   const handleCellClick = (_e: any) => {
-    console.log(selectedNumber);
-    handleSelectedCellChange(positionArray);
+    handleSelectedCellChange(currentCell);
   };
 
   return (
     <button
       className={
         defaultClassName +
-        (selectedCell[0] == rowPosition && selectedCell[1] == colPosition
+        (isSelectedCellEqualCurrentCell(selectedCell, currentCell)
           ? selectedBorder
           : defaultBorder)
       }

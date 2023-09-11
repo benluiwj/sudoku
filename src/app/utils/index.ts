@@ -11,3 +11,10 @@ export function stringToMultiDimensionArray(s: string): string[][] {
 export function multiDimensionArrayToString(array: string[][]): string {
   return array.map((row) => row.join(" ")).join(" ");
 }
+
+export function isSelectedCellEqualCurrentCell(
+  selected: number[],
+  current: number[]
+) {
+  return selected[0] == current[0] && selected[1] == current[1];
+}
