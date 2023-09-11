@@ -6,9 +6,9 @@ import SudokuProvider from "@/context/sudokuContext";
 
 export default function Home() {
   return (
-    <SudokuProvider>
+    <>
       <SudokuGame />
       <InputButtons />
-    </SudokuProvider>
+    </>
   );
 }

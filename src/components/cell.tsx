@@ -7,32 +7,48 @@ type Props = {
   value: string;
   rowPosition: number;
   colPosition: number;
+  initialValue: string;
 };
 
 const defaultBorder = "border border-slate-500 ";
 const selectedBorder = "border-8 border-blue-700";
+const invalidValue = "bg-red-300";
 const defaultClassName = "flex justify-center items-center aspect-square ";
 
-export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
+export default function SudokuCell({
+  value,
+  rowPosition,
+  colPosition,
+  initialValue,
+}: Props) {
   const {
     selectedNumber,
     selectedCell,
     handleSelectedCellChange,
     handleSelectedNumberChange,
+    updateGame,
+    validateCellValue,
     game,
   } = useSudokuContext();
-  const [cellValue, setCellValue] = useState(value);
-  const currentCell = [rowPosition, colPosition];
 
-  console.log(game);
+  const [cellValue, setCellValue] = useState(value);
+  const [isValid, setIsValid] = useState(true);
+  const currentCell = [rowPosition, colPosition];
 
   useEffect(() => {
     if (isSelectedCellEqualCurrentCell(selectedCell, currentCell)) {
       setCellValue(selectedNumber);
+      updateGame(selectedNumber, currentCell);
+    }
+  }, [selectedNumber]);
+
+  useEffect(() => {
+    if (isSelectedCellEqualCurrentCell(selectedCell, currentCell)) {
+      setIsValid(validateCellValue(selectedCell));
       handleSelectedCellChange(outOfBoundsCell);
       handleSelectedNumberChange(SUDOKU_VALUE.NONE);
     }
-  }, [selectedNumber]);
+  }, [game]);
 
   const handleCellClick = (_e: any) => {
     handleSelectedCellChange(currentCell);
@@ -41,12 +57,14 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
   return (
     <button
       className={
-        defaultClassName +
-        (isSelectedCellEqualCurrentCell(selectedCell, currentCell)
-          ? selectedBorder
-          : defaultBorder)
+        isValid
+          ? defaultClassName +
+            (isSelectedCellEqualCurrentCell(selectedCell, currentCell)
+              ? selectedBorder
+              : defaultBorder)
+          : defaultClassName + invalidValue
       }
-      disabled={value != "-"}
+      disabled={initialValue != "-"}
       onClick={handleCellClick}
     >
       {cellValue}

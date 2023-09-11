@@ -15,6 +15,7 @@ export default function SudokuGame() {
                 value={cellVal}
                 rowPosition={i}
                 colPosition={j}
+                initialValue={cellVal}
               />
             ))}
           </div>
