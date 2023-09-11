@@ -13,7 +13,12 @@ export default function SudokuGame() {
         {gameArray.map((val, i) => (
           <div key={i} className="grid grid-cols-3 border border-white">
             {val.map((cellVal, j) => (
-              <SudokuCell key={j} value={cellVal} />
+              <SudokuCell
+                key={j}
+                value={cellVal}
+                rowPosition={i}
+                colPosition={j}
+              />
             ))}
           </div>
         ))}
