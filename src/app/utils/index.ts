@@ -1,4 +1,4 @@
-export function stringToMultiDimensionArray(s: string): string[][] {
+export function serialiseSudoku(s: string): string[][] {
   return s.split("").reduce<string[][]>((acc, char, index) => {
     if (index % 9 === 0) {
       acc.push([]);
@@ -8,7 +8,7 @@ export function stringToMultiDimensionArray(s: string): string[][] {
   }, []);
 }
 
-export function multiDimensionArrayToString(array: string[][]): string {
+export function deserialiseSudoku(array: string[][]): string {
   return array.map((row) => row.join(" ")).join(" ");
 }
 
@@ -17,4 +17,13 @@ export function isSelectedCellEqualCurrentCell(
   current: number[]
 ) {
   return selected[0] == current[0] && selected[1] == current[1];
+}
+
+export function isCellValueCorrect(
+  cell: number[],
+  solution: string,
+  cellValue: string,
+  game: string
+) {
+  const [row, col] = cell;
 }

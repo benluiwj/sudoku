@@ -19,9 +19,12 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
     selectedCell,
     handleSelectedCellChange,
     handleSelectedNumberChange,
+    game,
   } = useSudokuContext();
   const [cellValue, setCellValue] = useState(value);
   const currentCell = [rowPosition, colPosition];
+
+  console.log(game);
 
   useEffect(() => {
     if (isSelectedCellEqualCurrentCell(selectedCell, currentCell)) {

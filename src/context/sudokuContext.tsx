@@ -12,6 +12,7 @@ import {
   outOfBoundsCell,
 } from "../app/utils/constants";
 import { getSudoku } from "sudoku-gen";
+import { serialiseSudoku } from "@/app/utils";
 
 // ----------------------------------------------------------------------
 
@@ -24,8 +25,8 @@ type SudokuContextType = {
   selectedCell: number[]; // x,y coordinate of cell
   isWon: boolean;
   difficulty: string;
-  solution: string;
-  game: string;
+  solution: string[][];
+  game: string[][];
   handleSelectedNumberChange: (_: string) => void;
   handleSelectedCellChange: (_: number[]) => void;
 };
@@ -35,8 +36,8 @@ const defaultSudokuContext = {
   selectedCell: outOfBoundsCell,
   isWon: false,
   difficulty: SUDOKU_DIFFICULTY.EASY,
-  solution: "",
-  game: "",
+  solution: [],
+  game: [],
   handleSelectedNumberChange: () => {},
   handleSelectedCellChange: () => {},
 };
@@ -45,8 +46,8 @@ const defaultSudokuContext = {
 
 export default function SudokuProvider({ children }: Props) {
   const [isWon, setIsWon] = useState<boolean>(false);
-  const [game, setGame] = useState<string>("");
-  const [solution, setSolution] = useState<string>("");
+  const [game, setGame] = useState<string[][]>([]);
+  const [solution, setSolution] = useState<string[][]>([]);
   const [difficulty, setDifficulty] = useState<string>(SUDOKU_DIFFICULTY.EASY);
   const [selectedNumber, setSelectedNumber] = useState<string>(
     SUDOKU_VALUE.NONE
@@ -59,8 +60,8 @@ export default function SudokuProvider({ children }: Props) {
       solution,
       difficulty,
     } = getSudoku(SUDOKU_DIFFICULTY.EASY);
-    setGame(game);
-    setSolution(solution);
+    setGame(serialiseSudoku(game));
+    setSolution(serialiseSudoku(solution));
     setDifficulty(difficulty);
   }, []);
 
