@@ -1,6 +1,6 @@
 import { getSudoku } from "sudoku-gen";
 
-export const SudokuGame = () => {
+export default function SudokuGame() {
   const sudoku = getSudoku();
 
   const arrayOfArrays: string[][] = sudoku.puzzle
@@ -20,9 +20,8 @@ export const SudokuGame = () => {
           <div className="grid grid-cols-3 border border-white">
             {val.map((cellVal, j) => (
               <div
-                className="flex justify-center items-center  border border-slate-500  "
+                className="flex justify-center items-center  border border-slate-500 aspect-square"
                 key={j}
-                style={{ aspectRatio: "1/1" }}
               >
                 {cellVal == "-" ? "" : cellVal}
               </div>
@@ -32,4 +31,4 @@ export const SudokuGame = () => {
       </div>
     </div>
   );
-};
+}
