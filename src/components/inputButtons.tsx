@@ -1,4 +1,4 @@
-import { sudokuValueArray } from "@/constants";
+import { sudokuValueArray } from "@/app/utils/constants";
 
 export default function InputButtons() {
   return (
