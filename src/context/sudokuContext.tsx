@@ -1,5 +1,16 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { SUDOKU_DIFFICULTY } from "../app/utils/constants";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import {
+  SUDOKU_DIFFICULTY,
+  SUDOKU_VALUE,
+  outOfBoundsCell,
+} from "../app/utils/constants";
 import { getSudoku } from "sudoku-gen";
 
 // ----------------------------------------------------------------------
@@ -9,21 +20,25 @@ type Props = {
 };
 
 type SudokuContextType = {
-  numberSelected: string;
-  cellSelected: number;
+  selectedNumber: string;
+  selectedCell: number[]; // x,y coordinate of cell
   isWon: boolean;
   difficulty: string;
   solution: string;
   game: string;
+  handleSelectedNumberChange: (_: string) => void;
+  handleSelectedCellChange: (_: number[]) => void;
 };
 
 const defaultSudokuContext = {
-  numberSelected: "",
-  cellSelected: 0,
+  selectedNumber: SUDOKU_VALUE.NONE,
+  selectedCell: outOfBoundsCell,
   isWon: false,
   difficulty: SUDOKU_DIFFICULTY.EASY,
   solution: "",
   game: "",
+  handleSelectedNumberChange: () => {},
+  handleSelectedCellChange: () => {},
 };
 
 // ----------------------------------------------------------------------
@@ -33,8 +48,10 @@ export default function SudokuProvider({ children }: Props) {
   const [game, setGame] = useState<string>("");
   const [solution, setSolution] = useState<string>("");
   const [difficulty, setDifficulty] = useState<string>(SUDOKU_DIFFICULTY.EASY);
-  const [numberSelected, setNumberSelected] = useState<string>("");
-  const [cellSelected, setCellSelected] = useState<number>(0);
+  const [selectedNumber, setSelectedNumber] = useState<string>(
+    SUDOKU_VALUE.NONE
+  );
+  const [selectedCell, setSelectedCell] = useState<number[]>(outOfBoundsCell);
 
   useEffect(() => {
     const {
@@ -47,19 +64,39 @@ export default function SudokuProvider({ children }: Props) {
     setDifficulty(difficulty);
   }, []);
 
+  const handleSelectedCellChange = useCallback((cell: number[]) => {
+    setSelectedCell(cell);
+  }, []);
+
+  const handleSelectedNumberChange = useCallback((number: string) => {
+    setSelectedNumber(number);
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      isWon,
+      game,
+      solution,
+      difficulty,
+      selectedCell,
+      selectedNumber,
+      handleSelectedCellChange,
+      handleSelectedNumberChange,
+    }),
+    [
+      isWon,
+      game,
+      solution,
+      difficulty,
+      selectedCell,
+      selectedNumber,
+      handleSelectedCellChange,
+      handleSelectedNumberChange,
+    ]
+  );
+
   return (
-    <SudokuContext.Provider
-      value={{
-        isWon,
-        game,
-        solution,
-        difficulty,
-        numberSelected,
-        cellSelected,
-      }}
-    >
-      {children}
-    </SudokuContext.Provider>
+    <SudokuContext.Provider value={value}>{children}</SudokuContext.Provider>
   );
 }
 
