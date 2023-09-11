@@ -30,6 +30,7 @@ type SudokuContextType = {
   difficulty: string;
   solution: string[][];
   game: string[][];
+  gameTemplate: string[][];
   handleSelectedNumberChange: (_: string) => void;
   handleSelectedCellChange: (_: number[]) => void;
   updateGame: (newValue: string, cell: number[]) => void;
@@ -44,6 +45,7 @@ const defaultSudokuContext = {
   difficulty: SUDOKU_DIFFICULTY.EASY,
   solution: [],
   game: [],
+  gameTemplate: [],
   handleSelectedNumberChange: () => {},
   handleSelectedCellChange: () => {},
   updateGame: () => {},
@@ -134,6 +136,7 @@ export default function SudokuProvider({ children }: Props) {
       validateCellValue,
       updateGame,
       isCellModifiable,
+      gameTemplate,
     }),
     [
       isWon,
@@ -147,6 +150,7 @@ export default function SudokuProvider({ children }: Props) {
       validateCellValue,
       updateGame,
       isCellModifiable,
+      gameTemplate,
     ]
   );
 

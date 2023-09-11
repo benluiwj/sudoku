@@ -30,3 +30,5 @@ export const sudokuValueArray: SUDOKU_VALUE[] = [
 ];
 
 export const outOfBoundsCell = [-1, -1];
+
+export const SUDOKU_TABLE = "sudoku_puzzles";
