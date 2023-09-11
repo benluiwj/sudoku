@@ -5,6 +5,7 @@ export enum SUDOKU_DIFFICULTY {
 }
 
 export enum SUDOKU_VALUE {
+  NONE = "NONE",
   ONE = "1",
   TWO = "2",
   THREE = "3",
@@ -27,3 +28,5 @@ export const sudokuValueArray: SUDOKU_VALUE[] = [
   SUDOKU_VALUE.EIGHT,
   SUDOKU_VALUE.NINE,
 ];
+
+export const outOfBoundsCell = [-1, -1];
