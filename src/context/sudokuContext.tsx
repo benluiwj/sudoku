@@ -34,6 +34,7 @@ type SudokuContextType = {
   handleSelectedCellChange: (_: number[]) => void;
   updateGame: (newValue: string, cell: number[]) => void;
   validateCellValue: (cell: number[]) => boolean;
+  isCellModifiable: (cell: number[]) => boolean;
 };
 
 const defaultSudokuContext = {
@@ -47,6 +48,7 @@ const defaultSudokuContext = {
   handleSelectedCellChange: () => {},
   updateGame: () => {},
   validateCellValue: () => true,
+  isCellModifiable: () => true,
 };
 
 // ----------------------------------------------------------------------
@@ -60,6 +62,7 @@ export default function SudokuProvider({ children }: Props) {
     SUDOKU_VALUE.NONE
   );
   const [selectedCell, setSelectedCell] = useState<number[]>(outOfBoundsCell);
+  const [gameTemplate, setGameTemplate] = useState<string[][]>([]);
 
   useEffect(() => {
     const {
@@ -67,9 +70,11 @@ export default function SudokuProvider({ children }: Props) {
       solution,
       difficulty,
     } = getSudoku(SUDOKU_DIFFICULTY.EASY);
-    setGame(serialiseSudoku(game));
+    const serialisedSudoku = serialiseSudoku(game);
+    setGame(serialisedSudoku);
     setSolution(serialiseSudoku(solution));
     setDifficulty(difficulty);
+    setGameTemplate(serialisedSudoku);
   }, []);
 
   const handleSelectedCellChange = useCallback((cell: number[]) => {
@@ -80,19 +85,8 @@ export default function SudokuProvider({ children }: Props) {
     setSelectedNumber(number);
   }, []);
 
-  // The sudoku given is in the following format
-  // 123456789987654321
-  // ^--tl---^^---tm--^
-  // tl represents the top left square and tm represents the top middle square
-  // the game that has been serialised is an array of these squares.
-  // to obtain the cell, which is in [row, col] format, we perform the following:
-  // (row % 2 + col % 2) ^ 2
-  // 00 -> 0
-  //
-
   const updateGame = useCallback(
     (newValue: string, cell: number[]) => {
-      console.log("update game called");
       setGame((draft) => {
         const [rowIndex, colIndex] = cell;
         // adapted from https://stackoverflow.com/questions/5269064/sudoku-find-current-square-based-on-row-column
@@ -119,6 +113,14 @@ export default function SudokuProvider({ children }: Props) {
     [game]
   );
 
+  const isCellModifiable = useCallback(
+    (cell: number[]) => {
+      const [rowIndex, colIndex] = cell;
+      return gameTemplate[Math.floor(colIndex / 9 + rowIndex)][colIndex] != "-";
+    },
+    [gameTemplate]
+  );
+
   const value = useMemo(
     () => ({
       isWon,
@@ -131,6 +133,7 @@ export default function SudokuProvider({ children }: Props) {
       handleSelectedNumberChange,
       validateCellValue,
       updateGame,
+      isCellModifiable,
     }),
     [
       isWon,
@@ -143,6 +146,7 @@ export default function SudokuProvider({ children }: Props) {
       handleSelectedNumberChange,
       validateCellValue,
       updateGame,
+      isCellModifiable,
     ]
   );
 

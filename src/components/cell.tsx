@@ -7,7 +7,6 @@ type Props = {
   value: string;
   rowPosition: number;
   colPosition: number;
-  initialValue: string;
 };
 
 const defaultBorder = "border border-slate-500 ";
@@ -15,12 +14,7 @@ const selectedBorder = "border-8 border-blue-700";
 const invalidValue = "bg-red-300";
 const defaultClassName = "flex justify-center items-center aspect-square ";
 
-export default function SudokuCell({
-  value,
-  rowPosition,
-  colPosition,
-  initialValue,
-}: Props) {
+export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
   const {
     selectedNumber,
     selectedCell,
@@ -29,6 +23,7 @@ export default function SudokuCell({
     updateGame,
     validateCellValue,
     game,
+    isCellModifiable,
   } = useSudokuContext();
 
   const [cellValue, setCellValue] = useState(value);
@@ -64,7 +59,7 @@ export default function SudokuCell({
               : defaultBorder)
           : defaultClassName + invalidValue
       }
-      disabled={initialValue != "-"}
+      disabled={isCellModifiable(currentCell)}
       onClick={handleCellClick}
     >
       {cellValue}
