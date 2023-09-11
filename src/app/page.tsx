@@ -1,12 +1,13 @@
 "use client";
 
-import SudokuGame from "@/components/game";
+import SudokuGame from "@/components/sudokuGame";
 import InputButtons from "@/components/inputButtons";
-import SudokuProvider from "@/context/sudokuContext";
+import Header from "@/components/header";
 
 export default function Home() {
   return (
     <>
+      <Header />
       <SudokuGame />
       <InputButtons />
     </>

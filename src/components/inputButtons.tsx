@@ -2,7 +2,6 @@ import { sudokuValueArray } from "@/app/utils/constants";
 import { useSudokuContext } from "@/context/sudokuContext";
 
 // STYLES
-
 const defaultClassName =
   "flex justify-center items-center border border-slate-500 aspect-square rounded";
 const selectedClassName = defaultClassName + " " + "bg-sky-500";

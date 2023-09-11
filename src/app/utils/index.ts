@@ -1,4 +1,4 @@
-export function serialiseSudoku(s: string): string[][] {
+export function deserialiseSudoku(s: string): string[][] {
   return s.split("").reduce<string[][]>((acc, char, index) => {
     if (index % 9 === 0) {
       acc.push([]);
@@ -8,7 +8,7 @@ export function serialiseSudoku(s: string): string[][] {
   }, []);
 }
 
-export function deserialiseSudoku(array: string[][]): string {
+export function serialiseSudoku(array: string[][]): string {
   return array.map((row) => row.join(" ")).join(" ");
 }
 

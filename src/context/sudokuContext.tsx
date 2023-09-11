@@ -14,7 +14,7 @@ import {
   outOfBoundsCell,
 } from "../app/utils/constants";
 import { getSudoku } from "sudoku-gen";
-import { serialiseSudoku } from "@/app/utils";
+import { deserialiseSudoku } from "@/app/utils";
 import { useImmer } from "use-immer";
 
 // ----------------------------------------------------------------------
@@ -70,9 +70,9 @@ export default function SudokuProvider({ children }: Props) {
       solution,
       difficulty,
     } = getSudoku(SUDOKU_DIFFICULTY.EASY);
-    const serialisedSudoku = serialiseSudoku(game);
+    const serialisedSudoku = deserialiseSudoku(game);
     setGame(serialisedSudoku);
-    setSolution(serialiseSudoku(solution));
+    setSolution(deserialiseSudoku(solution));
     setDifficulty(difficulty);
     setGameTemplate(serialisedSudoku);
   }, []);

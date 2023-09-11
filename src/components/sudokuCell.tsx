@@ -1,7 +1,7 @@
 import { isSelectedCellEqualCurrentCell } from "@/app/utils";
 import { SUDOKU_VALUE, outOfBoundsCell } from "@/app/utils/constants";
 import { useSudokuContext } from "@/context/sudokuContext";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   value: string;

@@ -1,5 +1,5 @@
 import { useSudokuContext } from "@/context/sudokuContext";
-import SudokuCell from "./cell";
+import SudokuCell from "./sudokuCell";
 
 export default function SudokuGame() {
   const { game } = useSudokuContext();
