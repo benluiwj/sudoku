@@ -36,5 +36,11 @@ export const SUDOKU_TABLE = "sudoku_puzzles";
 export enum SAVE_PUZZLE_TOASTER_MSG {
   SUCCESS = "Puzzle saved!",
   LOADING = "Saving puzzle...",
-  ERROR = "Something went wrong."
+  ERROR = "Something went wrong.",
 }
+
+export const SUDOKU_DIFFICULTY_ARRAY = [
+  SUDOKU_DIFFICULTY.EASY,
+  SUDOKU_DIFFICULTY.MEDIUM,
+  SUDOKU_DIFFICULTY.HARD,
+];

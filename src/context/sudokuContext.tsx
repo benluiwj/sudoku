@@ -36,6 +36,8 @@ type SudokuContextType = {
   updateGame: (newValue: string, cell: number[]) => void;
   validateCellValue: (cell: number[]) => boolean;
   isCellModifiable: (cell: number[]) => boolean;
+  loadGame: (game: string[][]) => void;
+  loadSolution: (solution: string[][]) => void;
 };
 
 const defaultSudokuContext = {
@@ -51,6 +53,8 @@ const defaultSudokuContext = {
   updateGame: () => {},
   validateCellValue: () => true,
   isCellModifiable: () => true,
+  loadGame: () => {},
+  loadSolution: () => {},
 };
 
 // ----------------------------------------------------------------------
@@ -72,6 +76,8 @@ export default function SudokuProvider({ children }: Props) {
       solution,
       difficulty,
     } = getSudoku(SUDOKU_DIFFICULTY.EASY);
+
+    console.log(game, solution);
     const serialisedSudoku = deserialiseSudoku(game);
     setGame(serialisedSudoku);
     setSolution(deserialiseSudoku(solution));
@@ -85,6 +91,15 @@ export default function SudokuProvider({ children }: Props) {
 
   const handleSelectedNumberChange = useCallback((number: string) => {
     setSelectedNumber(number);
+  }, []);
+
+  const loadGame = useCallback((game: string[][]) => {
+    setGame(game);
+    setGameTemplate(game);
+  }, []);
+
+  const loadSolution = useCallback((solution: string[][]) => {
+    setSolution(solution);
   }, []);
 
   const updateGame = useCallback(
@@ -137,6 +152,8 @@ export default function SudokuProvider({ children }: Props) {
       updateGame,
       isCellModifiable,
       gameTemplate,
+      loadGame,
+      loadSolution,
     }),
     [
       isWon,
@@ -151,6 +168,8 @@ export default function SudokuProvider({ children }: Props) {
       updateGame,
       isCellModifiable,
       gameTemplate,
+      loadGame,
+      loadSolution,
     ]
   );
 
