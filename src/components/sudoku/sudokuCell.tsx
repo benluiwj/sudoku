@@ -38,6 +38,7 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
   }, [selectedNumber]);
 
   useEffect(() => {
+    setCellValue(value);
     if (isSelectedCellEqualCurrentCell(selectedCell, currentCell)) {
       setIsValid(validateCellValue(selectedCell));
       handleSelectedCellChange(outOfBoundsCell);
