@@ -1,5 +1,5 @@
 import { serialiseSudoku } from "@/app/utils";
-import { SUDOKU_TABLE } from "@/app/utils/constants";
+import { SAVE_PUZZLE_TOASTER_MSG, SUDOKU_TABLE } from "@/app/utils/constants";
 import { useSudokuContext } from "@/context/sudokuContext";
 import { supabase } from "@/supbase";
 import toast from "react-hot-toast";
@@ -20,9 +20,9 @@ export default function SavePuzzleButton() {
         difficulty,
       });
     toast.promise(uploadPuzzle(), {
-      loading: "Saving puzzle",
-      success: "Puzzle saved!",
-      error: "Something went wrong.",
+      loading: SAVE_PUZZLE_TOASTER_MSG.LOADING,
+      success: SAVE_PUZZLE_TOASTER_MSG.SUCCESS,
+      error: SAVE_PUZZLE_TOASTER_MSG.ERROR,
     });
   };
 

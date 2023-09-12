@@ -32,3 +32,9 @@ export const sudokuValueArray: SUDOKU_VALUE[] = [
 export const outOfBoundsCell = [-1, -1];
 
 export const SUDOKU_TABLE = "sudoku_puzzles";
+
+export enum SAVE_PUZZLE_TOASTER_MSG {
+  SUCCESS = "Puzzle saved!",
+  LOADING = "Saving puzzle...",
+  ERROR = "Something went wrong."
+}
