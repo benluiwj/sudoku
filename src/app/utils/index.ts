@@ -9,7 +9,7 @@ export function deserialiseSudoku(s: string): string[][] {
 }
 
 export function serialiseSudoku(array: string[][]): string {
-  return array.map((row) => row.join(" ")).join(" ");
+  return array.map((row) => row.join("")).join("");
 }
 
 export function isSelectedCellEqualCurrentCell(
