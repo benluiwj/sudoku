@@ -77,12 +77,11 @@ export default function SudokuProvider({ children }: Props) {
       difficulty,
     } = getSudoku(SUDOKU_DIFFICULTY.EASY);
 
-    console.log(game, solution);
-    const serialisedSudoku = deserialiseSudoku(game);
-    setGame(serialisedSudoku);
+    const deserialisedSudoku = deserialiseSudoku(game);
+    setGame(deserialisedSudoku);
     setSolution(deserialiseSudoku(solution));
     setDifficulty(difficulty);
-    setGameTemplate(serialisedSudoku);
+    setGameTemplate(deserialisedSudoku);
   }, []);
 
   const handleSelectedCellChange = useCallback((cell: number[]) => {
@@ -93,13 +92,13 @@ export default function SudokuProvider({ children }: Props) {
     setSelectedNumber(number);
   }, []);
 
-  const loadGame = useCallback((game: string[][]) => {
-    setGame(game);
-    setGameTemplate(game);
+  const loadGame = useCallback((newGame: string[][]) => {
+    setGame(newGame);
+    setGameTemplate(newGame);
   }, []);
 
-  const loadSolution = useCallback((solution: string[][]) => {
-    setSolution(solution);
+  const loadSolution = useCallback((newSolution: string[][]) => {
+    setSolution(newSolution);
   }, []);
 
   const updateGame = useCallback(
@@ -111,7 +110,6 @@ export default function SudokuProvider({ children }: Props) {
 
         // Update the value in the corresponding cell within the square
         draft[index][colIndex] = newValue;
-        console.log(draft[index][colIndex]);
       });
     },
     [game]

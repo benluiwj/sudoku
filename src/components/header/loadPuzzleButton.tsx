@@ -1,13 +1,8 @@
-import { deserialiseSudoku, serialiseSudoku } from "@/app/utils";
-import {
-  SUDOKU_DIFFICULTY,
-  SUDOKU_DIFFICULTY_ARRAY,
-  SUDOKU_TABLE,
-} from "@/app/utils/constants";
+import { deserialiseSudoku } from "@/app/utils";
+import { SUDOKU_DIFFICULTY_ARRAY, SUDOKU_TABLE } from "@/app/utils/constants";
 import { useSudokuContext } from "@/context/sudokuContext";
 import { supabase } from "@/supbase";
 import { Dialog, Transition } from "@headlessui/react";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { Fragment, useEffect, useState } from "react";
 import { getSudoku } from "sudoku-gen";
 
@@ -16,7 +11,7 @@ import { getSudoku } from "sudoku-gen";
 
 const BUTTON_TEXT = "Load Puzzle";
 const defaultButtonClassName =
-  "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
+  "bg-blue-500 text-white font-bold py-2 px-4 rounded";
 const disabledButtonClassName = defaultButtonClassName + " " + "bg-slate-500";
 const selectedButtonClassName = defaultButtonClassName + " " + "bg-sky-500";
 
@@ -66,8 +61,8 @@ export default function LoadPuzzleButton() {
 
   // closes the modal and gets a random puzzle
   const closeModal = async () => {
-    await getGameFromDifficulty();
     setIsOpen(false);
+    await getGameFromDifficulty();
   };
 
   const openModal = async () => {
