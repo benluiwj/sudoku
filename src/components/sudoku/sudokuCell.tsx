@@ -26,7 +26,7 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
     isCellModifiable,
   } = useSudokuContext();
 
-  const [cellValue, setCellValue] = useState(value);
+  const [cellValue, setCellValue] = useState(value == "-" ? "" : value);
   const [isValid, setIsValid] = useState(true);
   const currentCell = [rowPosition, colPosition];
 
@@ -42,7 +42,7 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
   // when the game is loaded from the db/created fresh,
   // we need to capture the new value here
   useEffect(() => {
-    setCellValue(value);
+    setCellValue(value == "-" ? "" : value);
     setIsValid(validateCellValue(currentCell));
   }, [game]);
 
