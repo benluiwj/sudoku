@@ -43,7 +43,7 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
   // we need to capture the new value here
   useEffect(() => {
     setCellValue(value);
-    setIsValid(true);
+    setIsValid(validateCellValue(currentCell));
   }, [game]);
 
   // effect to check validity when game changes, result of the cell update
