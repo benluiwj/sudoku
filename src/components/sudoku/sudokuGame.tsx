@@ -3,6 +3,7 @@ import SudokuCell from "./sudokuCell";
 import { Dialog, Transition } from "@headlessui/react";
 
 import { useEffect, useState, Fragment } from "react";
+import { isGameSolved } from "@/app/utils";
 
 export default function SudokuGame() {
   const { game, solution, setGameWon, isWon } = useSudokuContext();
@@ -17,7 +18,7 @@ export default function SudokuGame() {
   }
 
   useEffect(() => {
-    if (game == solution) {
+    if (isGameSolved(game, solution)) {
       setGameWon();
     }
   }, [game]);

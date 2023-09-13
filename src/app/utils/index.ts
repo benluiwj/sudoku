@@ -22,3 +22,11 @@ export function isSelectedCellEqualCurrentCell(
 export function convertFirstLetterToUpper(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+export function isGameSolved(current: string[][], solution: string[][]) {
+  // check for length because current would be [] one first load,
+  // making the condition false
+  return (
+    current.length && serialiseSudoku(current) === serialiseSudoku(solution)
+  );
+}
