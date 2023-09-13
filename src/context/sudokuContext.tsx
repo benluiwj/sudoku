@@ -38,6 +38,7 @@ type SudokuContextType = {
   isCellModifiable: (cell: number[]) => boolean;
   loadGame: (game: string[][]) => void;
   loadSolution: (solution: string[][]) => void;
+  loadDifficulty: (difficulty: string) => void;
 };
 
 const defaultSudokuContext = {
@@ -55,6 +56,7 @@ const defaultSudokuContext = {
   isCellModifiable: () => true,
   loadGame: () => {},
   loadSolution: () => {},
+  loadDifficulty: () => {},
 };
 
 // ----------------------------------------------------------------------
@@ -99,6 +101,10 @@ export default function SudokuProvider({ children }: Props) {
 
   const loadSolution = useCallback((newSolution: string[][]) => {
     setSolution(newSolution);
+  }, []);
+
+  const loadDifficulty = useCallback((difficulty: string) => {
+    setDifficulty(difficulty);
   }, []);
 
   const updateGame = useCallback(
@@ -152,6 +158,7 @@ export default function SudokuProvider({ children }: Props) {
       gameTemplate,
       loadGame,
       loadSolution,
+      loadDifficulty,
     }),
     [
       isWon,
@@ -168,6 +175,7 @@ export default function SudokuProvider({ children }: Props) {
       gameTemplate,
       loadGame,
       loadSolution,
+      loadDifficulty,
     ]
   );
 
