@@ -130,7 +130,6 @@ export default function SudokuProvider({ children }: Props) {
       const { puzzle, solution } =
         games[Math.floor(Math.random() * games.length)];
 
-      console.log(puzzle, solution);
       setGame(deserialiseSudoku(puzzle));
       setSolution(deserialiseSudoku(solution));
       setDifficulty(difficulty);
@@ -154,7 +153,6 @@ export default function SudokuProvider({ children }: Props) {
 
   const validateCellValue = useCallback(
     (cell: number[]) => {
-      console.log(game);
       const [rowIndex, colIndex] = cell;
       return (
         game[Math.floor(colIndex / 9 + rowIndex)][colIndex] == "-" ||
