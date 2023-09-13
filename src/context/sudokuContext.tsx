@@ -39,6 +39,7 @@ type SudokuContextType = {
   loadGame: (game: string[][]) => void;
   loadSolution: (solution: string[][]) => void;
   loadDifficulty: (difficulty: string) => void;
+  setGameWon: () => void;
 };
 
 const defaultSudokuContext = {
@@ -57,6 +58,7 @@ const defaultSudokuContext = {
   loadGame: () => {},
   loadSolution: () => {},
   loadDifficulty: () => {},
+  setGameWon: () => {},
 };
 
 // ----------------------------------------------------------------------
@@ -142,6 +144,10 @@ export default function SudokuProvider({ children }: Props) {
     [gameTemplate]
   );
 
+  const setGameWon = useCallback(() => {
+    setIsWon(true);
+  }, []);
+
   const value = useMemo(
     () => ({
       isWon,
@@ -159,6 +165,7 @@ export default function SudokuProvider({ children }: Props) {
       loadGame,
       loadSolution,
       loadDifficulty,
+      setGameWon,
     }),
     [
       isWon,
@@ -176,6 +183,7 @@ export default function SudokuProvider({ children }: Props) {
       loadGame,
       loadSolution,
       loadDifficulty,
+      setGameWon,
     ]
   );
 
