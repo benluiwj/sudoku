@@ -1,4 +1,4 @@
-import { deserialiseSudoku } from "@/app/utils";
+import { convertFirstLetterToUpper, deserialiseSudoku } from "@/app/utils";
 import { SUDOKU_DIFFICULTY_ARRAY, SUDOKU_TABLE } from "@/app/utils/constants";
 import { useSudokuContext } from "@/context/sudokuContext";
 import { supabase } from "@/supbase";
@@ -124,7 +124,7 @@ export default function LoadPuzzleButton() {
                           key={i}
                           disabled={!availableDifficulties.has(value)}
                         >
-                          {value.charAt(0).toUpperCase() + value.slice(1)}
+                          {convertFirstLetterToUpper(value)}
                         </button>
                       ))}
                     </div>
