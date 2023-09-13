@@ -30,6 +30,7 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
   const [isValid, setIsValid] = useState(true);
   const currentCell = [rowPosition, colPosition];
 
+  // effect to update current cell value that updates the entire game context
   useEffect(() => {
     if (isSelectedCellEqualCurrentCell(selectedCell, currentCell)) {
       setCellValue(selectedNumber);
@@ -37,8 +38,16 @@ export default function SudokuCell({ value, rowPosition, colPosition }: Props) {
     }
   }, [selectedNumber]);
 
+  // effect to update/reset value of the cell
+  // when the game is loaded from the db/created fresh,
+  // we need to capture the new value here
   useEffect(() => {
     setCellValue(value);
+    setIsValid(true);
+  }, [game]);
+
+  // effect to check validity when game changes, result of the cell update
+  useEffect(() => {
     if (isSelectedCellEqualCurrentCell(selectedCell, currentCell)) {
       setIsValid(validateCellValue(selectedCell));
       handleSelectedCellChange(outOfBoundsCell);

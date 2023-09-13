@@ -1,37 +1,38 @@
-import { convertFirstLetterToUpper, deserialiseSudoku } from "@/app/utils";
-import { SUDOKU_DIFFICULTY_ARRAY, SUDOKU_TABLE } from "@/app/utils/constants";
+import { convertFirstLetterToUpper } from "@/app/utils";
+import { SUDOKU_DIFFICULTY_ARRAY } from "@/app/utils/constants";
 import { useSudokuContext } from "@/context/sudokuContext";
-import { supabase } from "@/supbase";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState } from "react";
-import { getSudoku } from "sudoku-gen";
-import { Difficulty } from "sudoku-gen/dist/types/difficulty.type";
+import { Fragment, useState } from "react";
+
+// Constants
+// -----------------------------
 
 const BUTTON_TEXT = "New Game";
+const MODAL_TITLE = "Select a difficulty below:";
+const MODAL_CLOSE_BUTTON_TEXT = "Done";
+
+// --------------------------------
+
+// Styles
+// --------------------------------
 
 const defaultButtonClassName =
   "bg-blue-500 text-white font-bold py-2 px-4 rounded";
 const selectedButtonClassName = defaultButtonClassName + " " + "bg-sky-500";
 
+// --------------------------------
+
 export default function NewGameButton() {
-  const { loadGame, loadSolution, loadDifficulty } = useSudokuContext();
+  const { createNewSudokuGameWithDifficulty } = useSudokuContext();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
 
-  // closes the modal and gets a random puzzle
-  const closeModal = async () => {
+  const closeModal = () => {
+    createNewSudokuGameWithDifficulty(selectedDifficulty);
     setIsOpen(false);
-    console.log(selectedDifficulty);
-    const { puzzle, solution, difficulty } = getSudoku(
-      selectedDifficulty as Difficulty
-    );
-    console.log(puzzle, solution);
-    loadGame(deserialiseSudoku(puzzle));
-    loadSolution(deserialiseSudoku(solution));
-    loadDifficulty(difficulty);
   };
 
-  const openModal = async () => {
+  const openModal = () => {
     setIsOpen(true);
   };
 
@@ -73,7 +74,7 @@ export default function NewGameButton() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Select a difficulty below:
+                    {MODAL_TITLE}
                   </Dialog.Title>
                   <div className="mt-2">
                     <div className="flex m-auto mt-6 justify-evenly">
@@ -99,7 +100,7 @@ export default function NewGameButton() {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 "
                       onClick={closeModal}
                     >
-                      Done
+                      {MODAL_CLOSE_BUTTON_TEXT}
                     </button>
                   </div>
                 </Dialog.Panel>

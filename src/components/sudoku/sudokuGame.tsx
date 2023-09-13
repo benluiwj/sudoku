@@ -13,13 +13,10 @@ export default function SudokuGame() {
     setIsOpen(false);
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
   useEffect(() => {
     if (isGameSolved(game, solution)) {
       setGameWon();
+      setIsOpen(true);
     }
   }, [game]);
 
@@ -40,7 +37,7 @@ export default function SudokuGame() {
             </div>
           ))}
         </div>
-        <Transition appear show={isOpen} as={Fragment}>
+        <Transition appear show={isWon} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModal}>
             <Transition.Child
               as={Fragment}

@@ -10,12 +10,15 @@ import {
 } from "react";
 import {
   SUDOKU_DIFFICULTY,
+  SUDOKU_TABLE,
   SUDOKU_VALUE,
   outOfBoundsCell,
 } from "../app/utils/constants";
 import { getSudoku } from "sudoku-gen";
 import { deserialiseSudoku } from "@/app/utils";
 import { useImmer } from "use-immer";
+import { Difficulty } from "sudoku-gen/dist/types/difficulty.type";
+import { supabase } from "@/supbase";
 
 // ----------------------------------------------------------------------
 
@@ -36,10 +39,9 @@ type SudokuContextType = {
   updateGame: (newValue: string, cell: number[]) => void;
   validateCellValue: (cell: number[]) => boolean;
   isCellModifiable: (cell: number[]) => boolean;
-  loadGame: (game: string[][]) => void;
-  loadSolution: (solution: string[][]) => void;
-  loadDifficulty: (difficulty: string) => void;
   setGameWon: () => void;
+  loadSudokuGameWithDifficulty: (difficulty: string) => Promise<void>;
+  createNewSudokuGameWithDifficulty: (difficulty: string) => void;
 };
 
 const defaultSudokuContext = {
@@ -55,10 +57,9 @@ const defaultSudokuContext = {
   updateGame: () => {},
   validateCellValue: () => true,
   isCellModifiable: () => true,
-  loadGame: () => {},
-  loadSolution: () => {},
-  loadDifficulty: () => {},
   setGameWon: () => {},
+  loadSudokuGameWithDifficulty: async () => {},
+  createNewSudokuGameWithDifficulty: () => {},
 };
 
 // ----------------------------------------------------------------------
@@ -96,18 +97,46 @@ export default function SudokuProvider({ children }: Props) {
     setSelectedNumber(number);
   }, []);
 
-  const loadGame = useCallback((newGame: string[][]) => {
-    setGame(newGame);
-    setGameTemplate(newGame);
-  }, []);
+  const createNewSudokuGameWithDifficulty = useCallback(
+    (difficulty: string) => {
+      const { puzzle: game, solution } = getSudoku(difficulty as Difficulty);
+      const deserialisedSudoku = deserialiseSudoku(game);
+      setGame(deserialisedSudoku);
+      setSolution(deserialiseSudoku(solution));
+      setDifficulty(difficulty);
+      setGameTemplate(deserialisedSudoku);
+    },
+    []
+  );
 
-  const loadSolution = useCallback((newSolution: string[][]) => {
-    setSolution(newSolution);
-  }, []);
+  const loadSudokuGameWithDifficulty = useCallback(
+    async (difficulty: string) => {
+      const query = await supabase
+        .from(SUDOKU_TABLE)
+        .select()
+        .eq("difficulty", difficulty);
 
-  const loadDifficulty = useCallback((difficulty: string) => {
-    setDifficulty(difficulty);
-  }, []);
+      const games = query?.data ?? [];
+
+      // just a precaution, shouldn't be the case
+      if (games.length == 0) {
+        const { puzzle, solution } = getSudoku(difficulty as Difficulty);
+        setGame(deserialiseSudoku(puzzle));
+        setSolution(deserialiseSudoku(solution));
+        return;
+      }
+
+      // pick a random game
+      const { puzzle, solution } =
+        games[Math.floor(Math.random() * games.length)];
+
+      console.log(puzzle, solution);
+      setGame(deserialiseSudoku(puzzle));
+      setSolution(deserialiseSudoku(solution));
+      setDifficulty(difficulty);
+    },
+    []
+  );
 
   const updateGame = useCallback(
     (newValue: string, cell: number[]) => {
@@ -162,9 +191,8 @@ export default function SudokuProvider({ children }: Props) {
       updateGame,
       isCellModifiable,
       gameTemplate,
-      loadGame,
-      loadSolution,
-      loadDifficulty,
+      loadSudokuGameWithDifficulty,
+      createNewSudokuGameWithDifficulty,
       setGameWon,
     }),
     [
@@ -180,9 +208,8 @@ export default function SudokuProvider({ children }: Props) {
       updateGame,
       isCellModifiable,
       gameTemplate,
-      loadGame,
-      loadSolution,
-      loadDifficulty,
+      loadSudokuGameWithDifficulty,
+      createNewSudokuGameWithDifficulty,
       setGameWon,
     ]
   );
