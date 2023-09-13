@@ -19,11 +19,6 @@ export function isSelectedCellEqualCurrentCell(
   return selected[0] == current[0] && selected[1] == current[1];
 }
 
-export function isCellValueCorrect(
-  cell: number[],
-  solution: string,
-  cellValue: string,
-  game: string
-) {
-  const [row, col] = cell;
+export function convertFirstLetterToUpper(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
