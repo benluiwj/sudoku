@@ -1,40 +1,33 @@
-import { convertFirstLetterToUpper } from "@/app/utils";
-import { SUDOKU_DIFFICULTY_ARRAY } from "@/app/utils/constants";
-import { useSudokuContext } from "@/context/sudokuContext";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-
-// Constants
-// -----------------------------
-
-const BUTTON_TEXT = "New Game";
-const MODAL_TITLE = "Select a difficulty below:";
-const MODAL_CLOSE_BUTTON_TEXT = "Done";
+import { convertFirstLetterToUpper } from "@/app/utils"
+import { SUDOKU_DIFFICULTY_ARRAY } from "@/app/utils/constants"
+import { useSudokuContext } from "@/context/sudokuContext"
+import { Dialog, Transition } from "@headlessui/react"
+import { Fragment, useState } from "react"
 
 // --------------------------------
 
 // Styles
 // --------------------------------
 
-const defaultButtonClassName =
-  "bg-blue-500 text-white font-bold py-2 px-4 rounded";
-const selectedButtonClassName = defaultButtonClassName + " " + "bg-sky-500";
+const DEFAULT_BUTTON_STYLE =
+  "bg-blue-500 text-white font-bold py-2 px-4 rounded"
+const SELECTED_BUTTON_STYLE = DEFAULT_BUTTON_STYLE + " " + "bg-sky-500"
 
 // --------------------------------
 
 export default function NewGameButton() {
-  const { createNewSudokuGameWithDifficulty } = useSudokuContext();
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const { createNewSudokuGameWithDifficulty } = useSudokuContext()
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedDifficulty, setSelectedDifficulty] = useState("")
 
   const closeModal = () => {
-    createNewSudokuGameWithDifficulty(selectedDifficulty);
-    setIsOpen(false);
-  };
+    createNewSudokuGameWithDifficulty(selectedDifficulty)
+    setIsOpen(false)
+  }
 
   const openModal = () => {
-    setIsOpen(true);
-  };
+    setIsOpen(true)
+  }
 
   return (
     <>
@@ -42,7 +35,7 @@ export default function NewGameButton() {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={openModal}
       >
-        {BUTTON_TEXT}
+        New Game
       </button>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -74,7 +67,7 @@ export default function NewGameButton() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    {MODAL_TITLE}
+                    Select a difficulty below:
                   </Dialog.Title>
                   <div className="mt-2">
                     <div className="flex m-auto mt-6 justify-evenly">
@@ -82,8 +75,8 @@ export default function NewGameButton() {
                         <button
                           className={
                             selectedDifficulty == value
-                              ? selectedButtonClassName
-                              : defaultButtonClassName
+                              ? SELECTED_BUTTON_STYLE
+                              : DEFAULT_BUTTON_STYLE
                           }
                           onClick={() => setSelectedDifficulty(value)}
                           key={i}
@@ -100,7 +93,7 @@ export default function NewGameButton() {
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 "
                       onClick={closeModal}
                     >
-                      {MODAL_CLOSE_BUTTON_TEXT}
+                      Done
                     </button>
                   </div>
                 </Dialog.Panel>
@@ -110,5 +103,5 @@ export default function NewGameButton() {
         </Dialog>
       </Transition>
     </>
-  );
+  )
 }
