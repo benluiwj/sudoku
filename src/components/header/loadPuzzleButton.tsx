@@ -26,10 +26,7 @@ export default function LoadPuzzleButton() {
   const presentDifficulties = async () => {
     const difficulties = await supabase.from(SUDOKU_TABLE).select("difficulty")
     const difficultyArray = difficulties?.data ?? []
-    const values = difficultyArray.reduce((set, jsonObject: any) => {
-      set.add(jsonObject.difficulty)
-      return set
-    }, new Set())
+    const values = new Set(difficultyArray)
     setAvailableDifficulties(values)
     return values
   }
